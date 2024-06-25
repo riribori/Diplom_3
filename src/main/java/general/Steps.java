@@ -3,13 +3,13 @@ package general;
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
+import org.junit.Assert;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.LoginPage;
-import pages.MainPage;
-import pages.RegistrationPage;
+import pages.*;
+
 import java.time.Duration;
 import static io.restassured.RestAssured.given;
 
@@ -18,14 +18,17 @@ public class Steps {
     private WebDriver driver;
     private RegistrationPage registrationPage;
     private LoginPage loginPage;
-    private CreateUser createUser;
     private MainPage mainPage;
+    private ProfilePage profilePage;
+    private ForgotPasswordPage forgotPassportPage;
 
     public Steps (WebDriver webDriver) {
         this.driver = webDriver;
         registrationPage = new RegistrationPage(driver);
         loginPage = new LoginPage(driver);
         mainPage = new MainPage(driver);
+        profilePage = new ProfilePage(driver);
+        forgotPassportPage = new ForgotPasswordPage(driver);
     }
 
     @Step("Вводим имя")
@@ -72,11 +75,29 @@ public class Steps {
         registrationPage.getButtonEnterInRegistration().click();
     }
 
+    @Step("Кликаем на кнопку войти на форме восстановления пароля")
+    public void clickEnterOnForgotPassportPage () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(forgotPassportPage.getButtonEnterInForgotPassword()));
+        forgotPassportPage.getButtonEnterInForgotPassword().click();
+    }
+
     @Step("Проверяем отображениы страницу логина")
     public boolean showLoginPage() {
         try {
             new WebDriverWait(driver, Duration.ofSeconds(3))
                     .until(ExpectedConditions.visibilityOf(loginPage.getButtonEnterInLogin()));
+            return true;
+        } catch (TimeoutException ex) {
+            return false;
+        }
+    }
+
+    @Step("Проверяем отображениы страницу с личным кабинетом")
+    public boolean showPersonalAccountPage() {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(3))
+                    .until(ExpectedConditions.visibilityOf(profilePage.getButtonExit()));
             return true;
         } catch (TimeoutException ex) {
             return false;
@@ -113,6 +134,28 @@ public class Steps {
         } catch (TimeoutException ex) {
             return false;
         }
+    }
+
+    @Step("Кликаем на кнопку Личный кабинет на главной")
+    public void clichPersonalAccountOnMain() {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(mainPage.getButtonPersonalAccountInMain()));
+        mainPage.getButtonPersonalAccountInMain().click();
+    }
+
+    @Step("Кликаем на кнопку Войти на главной")
+    public void clickEnterPageOnMain () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(mainPage.getButtonEnterInMain()));
+        mainPage.getButtonPersonalAccountInMain().click();
+    }
+
+    @Step ("Логин пользователя")
+    public void loginUser(CreateUser createUser){
+        setEmailLogin(createUser.getEmail());
+        setPasswordLogin(createUser.getPassword());
+        clickEnterOnLoginPage();
+        Assert.assertTrue("Не загрузилась страница с конструктором после логина",showTabBun());
     }
 
     @Step("Create User")

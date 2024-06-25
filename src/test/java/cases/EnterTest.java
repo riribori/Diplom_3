@@ -22,9 +22,32 @@ public class EnterTest extends BaseTest {
         driver.get("https://stellarburgers.nomoreparties.site/register");
         step.clickEnterOnRegistrationPage();
         Assert.assertTrue("Не появилась форма логина",step.showLoginPage());
-        step.setEmailLogin(createUser.getEmail());
-        step.setPasswordLogin(createUser.getPassword());
-        step.clickEnterOnLoginPage();
-        Assert.assertTrue("Не загрузилась страница с конструктором после логина",step.showTabBun());
+        step.loginUser(createUser);
+    }
+
+    @Test
+    public void testEnterFromMainPage()
+    {
+        driver.get("https://stellarburgers.nomoreparties.site");
+        step.clickEnterPageOnMain();
+        Assert.assertTrue("Не появилась форма логина",step.showLoginPage());
+        step.loginUser(createUser);
+    }
+
+    @Test
+    public void testEnterByPersonalAccountInMain() {
+
+        driver.get("https://stellarburgers.nomoreparties.site");
+        step.clichPersonalAccountOnMain();
+        Assert.assertTrue("Не появилась форма логина",step.showLoginPage());
+        step.loginUser(createUser);
+    }
+
+    @Test
+    public void testEnterFromForgotPasswordPage(){
+        driver.get("https://stellarburgers.nomoreparties.site/forgot-password");
+        step.clickEnterOnForgotPassportPage();
+        Assert.assertTrue("Не появилась форма логина",step.showLoginPage());
+        step.loginUser(createUser);
     }
 }

@@ -15,7 +15,7 @@ public class MainPage {
     private WebElement buttonEnterInMain;
 
     @FindBy(xpath = "//p[text()='Личный Кабинет']")
-    private WebElement buttonEnterInRegistration;
+    private WebElement buttonPersonalAccountInMain;
 
     @FindBy(xpath = "//span[text()='Булки']")
     private WebElement tabBun;
