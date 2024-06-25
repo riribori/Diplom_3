@@ -1,6 +1,7 @@
 package pages;
 
 import lombok.Getter;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,5 +31,8 @@ public class MainPage {
         this.driver = webDriver;
         PageFactory.initElements(driver, this);
     }
-
+    public WebElement getParent  (WebElement child) {
+        return  (WebElement) ((JavascriptExecutor) driver)
+                .executeScript("return arguments[0].parentNode;", child);
+    }
 }

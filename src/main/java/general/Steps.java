@@ -4,8 +4,10 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
@@ -75,6 +77,12 @@ public class Steps {
         registrationPage.getButtonEnterInRegistration().click();
     }
 
+    @Step("Кликаем на кнопку выйти")
+    public void clickExitOnPersonalAccountPage () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(profilePage.getButtonExit()));
+        profilePage.getButtonExit().click();
+    }
     @Step("Кликаем на кнопку войти на форме восстановления пароля")
     public void clickEnterOnForgotPassportPage () {
         new WebDriverWait(driver, Duration.ofSeconds(3))
@@ -150,6 +158,46 @@ public class Steps {
         mainPage.getButtonPersonalAccountInMain().click();
     }
 
+    @Step("Кликаем на лого в личном кабинете")
+    public void clickLogoOnPersonalAccountPage () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                    .until(ExpectedConditions.visibilityOf(profilePage.getButtonLogo()));
+        profilePage.getButtonLogo().click();
+    }
+    @Step("Кликаем на Конструктор в личном кабинете")
+    public void clickConstructorOnPersonalAccountPage () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(profilePage.getButtonConstructor()));
+        profilePage.getButtonConstructor().click();
+    }
+
+    @Step("Кликаем на Соусы")
+    public void clickSouseTab () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(mainPage.getTabSauce()));
+        mainPage.getTabSauce().click();
+        String attribute = mainPage.getParent(mainPage.getTabSauce()).getAttribute("class");
+        Assert.assertTrue("Не сработало переключение на соусы, class="+attribute, attribute.contains("tab_tab_type_current"));
+    }
+
+    @Step("Кликаем на Ингредиенты")
+    public void clickIngredientsTab () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(mainPage.getTabIngredient()));
+        mainPage.getTabIngredient().click();
+        String attribute = mainPage.getParent(mainPage.getTabIngredient()).getAttribute("class");
+        Assert.assertTrue("Не сработало переключение на ингредиенты, class="+attribute, attribute.contains("tab_tab_type_current"));
+    }
+
+    @Step("Кликаем на Булки")
+    public void clickBunTab () {
+        new WebDriverWait(driver, Duration.ofSeconds(3))
+                .until(ExpectedConditions.visibilityOf(mainPage.getTabBun()));
+        mainPage.getTabBun().click();
+        String attribute = mainPage.getParent(mainPage.getTabBun()).getAttribute("class");
+        Assert.assertTrue("Не сработало переключение на булки, class="+attribute, attribute.contains("tab_tab_type_current"));
+    }
+
     @Step ("Логин пользователя")
     public void loginUser(CreateUser createUser){
         setEmailLogin(createUser.getEmail());
@@ -170,4 +218,20 @@ public class Steps {
                         .post("api/auth/register");
         return response;
     }
+
+    @Step("Delete User")
+    public Response deleteUser (DeleteUser deleteUser, String token){
+        RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
+        Response response =
+                given()
+                        .header("Content-type", "application/json")
+                        .header("Authorization", token)
+                        .and()
+                        .body(deleteUser)
+                        .when()
+                        .delete("api/auth/user");
+        return response;
+
+    }
+
 }

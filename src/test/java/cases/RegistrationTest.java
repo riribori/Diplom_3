@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-
 public class RegistrationTest extends BaseTest {
 
         @Test
@@ -17,6 +16,7 @@ public class RegistrationTest extends BaseTest {
             step.setPassword(RandomStringUtils.randomAlphabetic(6));
             step.clickRegistration();
             Assert.assertTrue("Не появилась форма логина",step.showLoginPage());
+
         }
 
     @Test
