@@ -4,14 +4,11 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.*;
-
 import java.time.Duration;
 import static io.restassured.RestAssured.given;
 
@@ -72,7 +69,7 @@ public class Steps {
         }
     }
 
-    @Step("Кликаем на кнопку войти")
+    @Step("Кликаем на кнопку войти на странице регистрации")
     public void clickEnterOnRegistrationPage () {
         new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(registrationPage.getButtonEnterInRegistration()));
@@ -92,7 +89,7 @@ public class Steps {
         forgotPassportPage.getButtonEnterInForgotPassword().click();
     }
 
-    @Step("Проверяем отображениы страницу логина")
+    @Step("Проверяем отображениы страницы логина")
     public boolean showLoginPage() {
         try {
             new WebDriverWait(driver, time)
@@ -103,7 +100,7 @@ public class Steps {
         }
     }
 
-    @Step("Проверяем отображениы страницу с личным кабинетом")
+    @Step("Проверяем отображение страницы с личным кабинетом")
     public boolean showPersonalAccountPage() {
         try {
             new WebDriverWait(driver, time)
@@ -121,7 +118,7 @@ public class Steps {
         loginPage.getInputMail().sendKeys(login);
     }
 
-    @Step("Вводим почту на форме логина")
+    @Step("Вводим пароль на форме логина")
     public void setPasswordLogin (String password) {
         new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(loginPage.getInputPassword()));
@@ -135,7 +132,7 @@ public class Steps {
         loginPage.getButtonEnterInLogin().click();
     }
 
-    @Step("Отображаем таб с булками")
+    @Step("Проверяем отображение таба с булками")
     public boolean showTabBun() {
         try {
             new WebDriverWait(driver, time)
@@ -208,7 +205,7 @@ public class Steps {
         Assert.assertTrue("Не загрузилась страница с конструктором после логина",showTabBun());
     }
 
-    @Step("Create User")
+    @Step("Создаем пользователя")
     public Response createNewUser (CreateUser createUser){
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         Response response =
@@ -221,7 +218,7 @@ public class Steps {
         return response;
     }
 
-    @Step("Delete User")
+    @Step("Удаляем пользователя")
     public Response deleteUser (DeleteUser deleteUser, String token){
         RestAssured.baseURI = "https://stellarburgers.nomoreparties.site";
         Response response =
@@ -233,7 +230,5 @@ public class Steps {
                         .when()
                         .delete("api/auth/user");
         return response;
-
     }
-
 }

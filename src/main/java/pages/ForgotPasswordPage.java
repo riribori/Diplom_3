@@ -8,7 +8,6 @@ import org.openqa.selenium.support.PageFactory;
 
 @Getter
 public class ForgotPasswordPage {
-
     private WebDriver driver;
 
     @FindBy(xpath = "//a[text()='Войти']")

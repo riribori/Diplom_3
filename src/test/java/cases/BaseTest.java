@@ -2,7 +2,6 @@ package cases;
 
 import general.Steps;
 import general.WebDriverFactory;
-import general.WebDriverName;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +20,6 @@ public class BaseTest {
     }
     @After
     public void teardown() {
-        //    Закрой браузер
         driver.quit();
     }
 }
