@@ -14,7 +14,7 @@ public class BaseTest {
     @Before
     public void setUp()
     {
-        driver = WebDriverFactory.create(WebDriverName.CHROME);
+        driver = WebDriverFactory.create();
         driver.manage().window().maximize();
         step = new Steps(driver);
 

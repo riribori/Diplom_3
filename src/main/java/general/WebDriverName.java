@@ -3,6 +3,6 @@
 
     public enum WebDriverName {
         CHROME,
-        FIREFOX
+        YANDEX
     }
 

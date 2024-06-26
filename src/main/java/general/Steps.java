@@ -23,6 +23,8 @@ public class Steps {
     private MainPage mainPage;
     private ProfilePage profilePage;
     private ForgotPasswordPage forgotPassportPage;
+    private Duration time = Duration.ofSeconds(5);
+
 
     public Steps (WebDriver webDriver) {
         this.driver = webDriver;
@@ -35,57 +37,57 @@ public class Steps {
 
     @Step("Вводим имя")
             public void setName (String name) {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(registrationPage.getInputName()));
         registrationPage.getInputName().sendKeys(name);
     }
 
     @Step("Вводим почту")
     public void setEmail (String email){
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(registrationPage.getInputMail()));
         registrationPage.getInputMail().sendKeys(email);
     }
 
     @Step("Вводим пароль")
     public void setPassword (String password){
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(registrationPage.getInputPassword()));
         registrationPage.getInputPassword().sendKeys(password);
     }
     @Step("Кликаем на кнопку регистрации")
     public void clickRegistration () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(registrationPage.getButtonRegistration()));
         registrationPage.getButtonRegistration().click();
     }
     @Step("Проверяем отображение ошибки пароля")
     public boolean showPasswordError() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
+            new WebDriverWait(driver, time)
                     .until(ExpectedConditions.visibilityOf(registrationPage.getMessageErrorPassword()));
             return true;
         } catch (TimeoutException ex) {
-            return false;
+                   return false;
         }
     }
 
     @Step("Кликаем на кнопку войти")
     public void clickEnterOnRegistrationPage () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(registrationPage.getButtonEnterInRegistration()));
         registrationPage.getButtonEnterInRegistration().click();
     }
 
     @Step("Кликаем на кнопку выйти")
     public void clickExitOnPersonalAccountPage () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(profilePage.getButtonExit()));
         profilePage.getButtonExit().click();
     }
     @Step("Кликаем на кнопку войти на форме восстановления пароля")
     public void clickEnterOnForgotPassportPage () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(forgotPassportPage.getButtonEnterInForgotPassword()));
         forgotPassportPage.getButtonEnterInForgotPassword().click();
     }
@@ -93,7 +95,7 @@ public class Steps {
     @Step("Проверяем отображениы страницу логина")
     public boolean showLoginPage() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
+            new WebDriverWait(driver, time)
                     .until(ExpectedConditions.visibilityOf(loginPage.getButtonEnterInLogin()));
             return true;
         } catch (TimeoutException ex) {
@@ -104,7 +106,7 @@ public class Steps {
     @Step("Проверяем отображениы страницу с личным кабинетом")
     public boolean showPersonalAccountPage() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
+            new WebDriverWait(driver, time)
                     .until(ExpectedConditions.visibilityOf(profilePage.getButtonExit()));
             return true;
         } catch (TimeoutException ex) {
@@ -114,21 +116,21 @@ public class Steps {
 
     @Step("Вводим почту на форме логина")
     public void setEmailLogin (String login) {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(loginPage.getInputMail()));
         loginPage.getInputMail().sendKeys(login);
     }
 
     @Step("Вводим почту на форме логина")
     public void setPasswordLogin (String password) {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(loginPage.getInputPassword()));
         loginPage.getInputPassword().sendKeys(password);
     }
 
     @Step("Кликаем на кнопку войти на странице логина")
     public void clickEnterOnLoginPage () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(loginPage.getButtonEnterInLogin()));
         loginPage.getButtonEnterInLogin().click();
     }
@@ -136,7 +138,7 @@ public class Steps {
     @Step("Отображаем таб с булками")
     public boolean showTabBun() {
         try {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
+            new WebDriverWait(driver, time)
                     .until(ExpectedConditions.visibilityOf(mainPage.getTabBun()));
             return true;
         } catch (TimeoutException ex) {
@@ -146,34 +148,34 @@ public class Steps {
 
     @Step("Кликаем на кнопку Личный кабинет на главной")
     public void clichPersonalAccountOnMain() {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getButtonPersonalAccountInMain()));
         mainPage.getButtonPersonalAccountInMain().click();
     }
 
     @Step("Кликаем на кнопку Войти на главной")
     public void clickEnterPageOnMain () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getButtonEnterInMain()));
         mainPage.getButtonPersonalAccountInMain().click();
     }
 
     @Step("Кликаем на лого в личном кабинете")
     public void clickLogoOnPersonalAccountPage () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                     .until(ExpectedConditions.visibilityOf(profilePage.getButtonLogo()));
         profilePage.getButtonLogo().click();
     }
     @Step("Кликаем на Конструктор в личном кабинете")
     public void clickConstructorOnPersonalAccountPage () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(profilePage.getButtonConstructor()));
         profilePage.getButtonConstructor().click();
     }
 
     @Step("Кликаем на Соусы")
     public void clickSouseTab () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getTabSauce()));
         mainPage.getTabSauce().click();
         String attribute = mainPage.getParent(mainPage.getTabSauce()).getAttribute("class");
@@ -182,7 +184,7 @@ public class Steps {
 
     @Step("Кликаем на Ингредиенты")
     public void clickIngredientsTab () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getTabIngredient()));
         mainPage.getTabIngredient().click();
         String attribute = mainPage.getParent(mainPage.getTabIngredient()).getAttribute("class");
@@ -191,7 +193,7 @@ public class Steps {
 
     @Step("Кликаем на Булки")
     public void clickBunTab () {
-        new WebDriverWait(driver, Duration.ofSeconds(3))
+        new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getTabBun()));
         mainPage.getTabBun().click();
         String attribute = mainPage.getParent(mainPage.getTabBun()).getAttribute("class");

@@ -10,18 +10,20 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class WebDriverFactory {
-    public static WebDriver create(WebDriverName webDriverName) {
-        return create(webDriverName, new MutableCapabilities());
+    public static WebDriver create() {
+        return create(new MutableCapabilities());
     }
 
-    public static WebDriver create(WebDriverName webDriverName, MutableCapabilities browserOptions) {
+    public static WebDriver create(MutableCapabilities browserOptions) {
+        String browser = System.getProperty("browser", "CHROME").toUpperCase();
+       WebDriverName webDriverName = WebDriverName.valueOf(browser);
         switch (webDriverName) {
             case CHROME:
                 //            WebDriverManager.chromedriver().setup();
                 return new ChromeDriver(new ChromeOptions().merge(browserOptions));
-            case FIREFOX:
-                //           WebDriverManager.firefoxdriver().setup();
-                return new FirefoxDriver(new FirefoxOptions().merge(browserOptions));
+            case YANDEX:
+                System.setProperty("webdriver.chrome.driver", "/Users/borisova/yandexdriver");
+                return new ChromeDriver(new ChromeOptions().merge(browserOptions));
             default:
                 //           WebDriverManager.chromedriver().setup();
                 return new ChromeDriver(new ChromeOptions().merge(browserOptions));
