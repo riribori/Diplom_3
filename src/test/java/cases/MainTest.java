@@ -12,8 +12,9 @@ public class MainTest extends BaseTest {
     private static String token;
     private static String email;
     private static String name;
+
     @Before
-    public void createUser () {
+    public void createUser() {
         createUser = new CreateUser(RandomStringUtils.randomAlphabetic(10), RandomStringUtils.randomAlphabetic(10) + "@mail.ru", RandomStringUtils.randomAlphabetic(6));
         Response response = step.createNewUser(createUser);
         email = createUser.getEmail();
@@ -27,18 +28,37 @@ public class MainTest extends BaseTest {
         driver.get("https://stellarburgers.nomoreparties.site/login");
         step.loginUser(createUser);
         step.clichPersonalAccountOnMain();
-        Assert.assertTrue("Не открылась страница с профилем",step.showPersonalAccountPage());
+        Assert.assertTrue("Не открылась страница с профилем", step.showPersonalAccountPage());
     }
+
     @Test
-    public void testSwitch(){
+    public void testSwitchFromBunToSause() {
         driver.get("https://stellarburgers.nomoreparties.site/login");
         step.loginUser(createUser);
-        step.clickSouseTab();
-        step.clickIngredientsTab();
-        step.clickBunTab();
+        String attribute = step.clickSouseTab();
+        step.assertSwitchTub(attribute);
     }
+
+    @Test
+    public void testSwitchFromBunToIngredient() {
+        driver.get("https://stellarburgers.nomoreparties.site/login");
+        step.loginUser(createUser);
+        String attribute = step.clickIngredientsTab();
+        step.assertSwitchTub(attribute);
+    }
+
+    @Test
+    public void testSwitchToBun() {
+        driver.get("https://stellarburgers.nomoreparties.site/login");
+        step.loginUser(createUser);
+        step.clickIngredientsTab();
+        String attribute = step.clickBunTab();
+        step.assertSwitchTub(attribute);
+    }
+
     @After
     public void deleteUser() {
         step.deleteUser(new DeleteUser(email, name), token).then().statusCode(202);
+    }
 }
-}
+

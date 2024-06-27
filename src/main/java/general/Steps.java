@@ -171,30 +171,33 @@ public class Steps {
     }
 
     @Step("Кликаем на Соусы")
-    public void clickSouseTab () {
+    public String clickSouseTab () {
         new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getTabSauce()));
         mainPage.getTabSauce().click();
-        String attribute = mainPage.getParent(mainPage.getTabSauce()).getAttribute("class");
-        Assert.assertTrue("Не сработало переключение на соусы, class="+attribute, attribute.contains("tab_tab_type_current"));
+        return mainPage.getParent(mainPage.getTabSauce()).getAttribute("class");
     }
 
     @Step("Кликаем на Ингредиенты")
-    public void clickIngredientsTab () {
+    public String clickIngredientsTab () {
         new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getTabIngredient()));
         mainPage.getTabIngredient().click();
-        String attribute = mainPage.getParent(mainPage.getTabIngredient()).getAttribute("class");
-        Assert.assertTrue("Не сработало переключение на ингредиенты, class="+attribute, attribute.contains("tab_tab_type_current"));
+        return mainPage.getParent(mainPage.getTabIngredient()).getAttribute("class");
+    }
+
+
+    @Step ("Проверяем переключение между табами")
+    public void assertSwitchTub (String attribute) {
+        Assert.assertTrue("Не сработало переключение, class="+attribute, attribute.contains("tab_tab_type_current"));
     }
 
     @Step("Кликаем на Булки")
-    public void clickBunTab () {
+    public String clickBunTab () {
         new WebDriverWait(driver, time)
                 .until(ExpectedConditions.visibilityOf(mainPage.getTabBun()));
         mainPage.getTabBun().click();
-        String attribute = mainPage.getParent(mainPage.getTabBun()).getAttribute("class");
-        Assert.assertTrue("Не сработало переключение на булки, class="+attribute, attribute.contains("tab_tab_type_current"));
+        return mainPage.getParent(mainPage.getTabBun()).getAttribute("class");
     }
 
     @Step ("Логин пользователя")
